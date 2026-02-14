@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>∏
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git & Common Commands - Technical Onboarding</title>
+<style>
+/* Theme Variables */
+:root {
+  --font-family-display: Arial, sans-serif;
+  --font-weight-display: 600;
+  --font-family-content: Arial, sans-serif;
+  --font-weight-content: 400;
+  --font-size-content: 16px;
+  --line-height-content: 1.4;
+}
+
+/* DARK THEME (DEFAULT) */
+body.theme-dark {
+  --color-bg-base: #0f172a;
+  --color-bg-elevated: #020617;
+  --color-bg-surface: #1e293b;
+  --color-bg-muted: #334155;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-text-accent: #38bdf8;
+  --color-primary: #38bdf8;
+  --color-primary-foreground: #0f172a;
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-content);
+  font-weight: var(--font-weight-content);
+  font-size: var(--font-size-content);
+  line-height: var(--line-height-content);
+  overflow-x: hidden;
+}
+
+/* Slide Container */
+.slide {
+  width: 960px;
+  height: 540px;
+  margin: 0 auto 20px;
+  display: flex;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Layout Utilities */
+.row { flex-direction: row; }
+.col { flex-direction: column; }
+.center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.space-between { justify-content: space-between; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.fill-width { flex: 1; }
+.fill-height { flex: 1; display: flex; flex-direction: column; }
+
+/* Spacing */
+.gap-sm { gap: 0.5rem; }
+.gap-md { gap: 1rem; }
+.gap-lg { gap: 1.5rem; }
+.gap-xl { gap: 2rem; }
+.gap-2xl { gap: 3rem; }
+
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-8 { padding: 2rem; }
+.p-12 { padding: 3rem; }
+.p-16 { padding: 4rem; }
+
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mb-12 { margin-bottom: 3rem; }
+
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 2rem; }
+.mt-12 { margin-top: 3rem; }
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-display);
+  line-height: 1.2;
+  margin: 0;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.25rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+.text-6xl { font-size: 3.75rem; }
+.text-5xl { font-size: 3rem; }
+.text-4xl { font-size: 2.25rem; }
+.text-3xl { font-size: 1.875rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-xl { font-size: 1.25rem; }
+.text-lg { font-size: 1.125rem; }
+.text-base { font-size: 1rem; }
+.text-sm { font-size: 0.875rem; }
+.text-xs { font-size: 0.75rem; }
+
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.font-medium { font-weight: 500; }
+.font-normal { font-weight: 400; }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.opacity-90 { opacity: 0.9; }
+.opacity-80 { opacity: 0.8; }
+.opacity-70 { opacity: 0.7; }
+.opacity-60 { opacity: 0.6; }
+
+/* Lists */
+ul, ol {
+  margin-left: 2rem;
+  line-height: 1.8;
+}
+
+ul li { list-style: disc; }
+ol li { list-style: decimal; }
+
+li { margin-bottom: 0.75rem; }
+li:last-child { margin-bottom: 0; }
+
+/* Code Styles */
+code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+}
+
+pre {
+  font-family: 'Courier New', monospace;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+</style>
+</head>
+<body class="theme-dark">
+
+  <!-- Slide 1: Title -->
+  <section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+    <h1 class="text-6xl mb-4" style="color: #38bdf8;">Git &amp; Version Control</h1>
+    <p class="text-2xl mb-2" style="color: #cbd5e1;">Essential Commands &amp; Workflows</p>
+    <p class="text-xl" style="color: #94a3b8;">Technical Onboarding for Data Teams</p>
+    <p class="text-sm mt-8" style="color: #94a3b8;">February 2026</p>
+  </section>
+
+  <!-- Slide 2: What is Git -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">What is Git?</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li>Distributed version control system</li>
+      <li>Created by Linus Torvalds in 2005</li>
+      <li>Tracks changes in source code</li>
+      <li>Enables seamless team collaboration</li>
+    </ul>
+  </section>
+
+  <!-- Slide 3: Why Git -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Why Use Git?</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li>Complete project history and version tracking</li>
+      <li>Easy collaboration with team members</li>
+      <li>Branch and experiment safely</li>
+      <li>Industry standard for code management</li>
+    </ul>
+  </section>
+
+  <!-- Slide 4: Installing Git - macOS -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Installing Git on macOS</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Method 1: Download from official site</p>
+    <p class="text-base mb-4" style="color: #94a3b8;">Visit git-scm.com and download the installer</p>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Method 2: Install via Homebrew</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">brew install git</pre>
+  </section>
+
+  <!-- Slide 5: Installing Git - Windows -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Installing Git on Windows</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Download Git for Windows from git-scm.com</p>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Run installer and follow wizard</p>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Verify installation in Git Bash:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">git --version</pre>
+  </section>
+
+  <!-- Slide 6: Initial Configuration -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Initial Git Configuration</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Set your name and email (required for commits):</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 0.5rem;">git config --global user.name "Your Name"</pre>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">git config --global user.email "you@example.com"</pre>
+    <p class="text-base" style="color: #94a3b8;">These identify your commits in project history</p>
+  </section>
+
+  <!-- Slide 7: Core Concepts -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Git Core Concepts</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li><strong>Repository</strong>: Project folder tracked by Git</li>
+      <li><strong>Commit</strong>: Snapshot of your changes</li>
+      <li><strong>Branch</strong>: Parallel version of code</li>
+      <li><strong>Remote</strong>: Server copy (GitHub, GitLab)</li>
+    </ul>
+  </section>
+
+  <!-- Slide 8: Starting with Git -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Creating a Repository</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Initialize new repository:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">git init</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Clone existing repository:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">git clone &lt;repository-url&gt;</pre>
+  </section>
+
+  <!-- Slide 9: Basic Workflow Part 1 -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Basic Workflow: Status &amp; Add</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Check status of files:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">git status</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Stage files for commit:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">git add &lt;filename&gt;    # or git add .</pre>
+  </section>
+
+  <!-- Slide 10: Basic Workflow Part 2 -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Basic Workflow: Commit</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Commit staged changes:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">git commit -m "Descriptive message"</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Stage and commit together:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">git commit -am "Message"</pre>
+  </section>
+
+  <!-- Slide 11: Working with Remotes -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Remote Repository Commands</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Add remote repository:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">git remote add origin &lt;url&gt;</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">View remotes:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">git remote -v</pre>
+  </section>
+
+  <!-- Slide 12: Push and Pull -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Sync with Remote: Push &amp; Pull</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Push commits to remote:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">git push origin main</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Pull latest changes:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">git pull origin main</pre>
+  </section>
+
+  <!-- Slide 13: Branching Part 1 -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Creating &amp; Switching Branches</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Create new branch:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">git branch feature-name</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Switch to branch:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">git checkout feature-name</pre>
+  </section>
+
+  <!-- Slide 14: Branching Part 2 -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Branch Management</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Create and switch in one command:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">git checkout -b feature-name</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">List all branches:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">git branch</pre>
+  </section>
+
+  <!-- Slide 15: Merging -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Merging Branches</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Switch to target branch, then merge:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 0.5rem;">git checkout main</pre>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">git merge feature-name</pre>
+    <p class="text-base" style="color: #94a3b8;">Combines changes from feature branch into main</p>
+  </section>
+
+  <!-- Slide 16: Viewing History -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Viewing Commit History</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">View commit log:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">git log</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Compact one-line view:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">git log --oneline</pre>
+  </section>
+
+  <!-- Slide 17: Undoing Changes -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Undoing Changes</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Discard unstaged changes:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">git restore &lt;filename&gt;</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Unstage a file:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">git restore --staged &lt;filename&gt;</pre>
+  </section>
+
+  <!-- Slide 18: Viewing Differences -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Viewing Changes</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">See unstaged changes:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">git diff</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">See staged changes:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">git diff --staged</pre>
+  </section>
+
+  <!-- Slide 19: Best Practices Part 1 -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Best Practices</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li>Commit often with clear messages</li>
+      <li>Pull before you push</li>
+      <li>Use branches for new features</li>
+      <li>Keep main branch stable</li>
+    </ul>
+  </section>
+
+  <!-- Slide 20: Best Practices Part 2 -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Team Collaboration Tips</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li>Write descriptive commit messages</li>
+      <li>Review code via pull requests</li>
+      <li>Handle merge conflicts promptly</li>
+      <li>Document workflows in README</li>
+    </ul>
+  </section>
+
+  <!-- Slide 21: Common Workflow -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Typical Daily Workflow</h2>
+    <ol class="text-lg" style="color: #cbd5e1;">
+      <li>Pull latest changes: <code style="background-color: #1e293b; color: #38bdf8;">git pull</code></li>
+      <li>Create feature branch</li>
+      <li>Make changes and commit</li>
+      <li>Push and create pull request</li>
+    </ol>
+  </section>
+
+  <!-- Slide 22: Quick Reference -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Command Quick Reference</h2>
+    <ul class="text-base" style="color: #cbd5e1;">
+      <li><code style="background-color: #1e293b; color: #38bdf8;">git status</code> - Check working tree status</li>
+      <li><code style="background-color: #1e293b; color: #38bdf8;">git add .</code> - Stage all changes</li>
+      <li><code style="background-color: #1e293b; color: #38bdf8;">git commit -m ""</code> - Commit with message</li>
+      <li><code style="background-color: #1e293b; color: #38bdf8;">git push</code> - Upload to remote</li>
+      <li><code style="background-color: #1e293b; color: #38bdf8;">git pull</code> - Download from remote</li>
+    </ul>
+  </section>
+
+  <!-- Slide 24: Thank You -->
+  <section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+    <h2 class="text-5xl mb-6" style="color: #38bdf8;">Ready to Git Started!</h2>
+    <p class="text-xl mb-4" style="color: #cbd5e1;">Questions?</p>
+    <p class="text-base" style="color: #94a3b8;">Remember: Practice makes perfect with Git!</p>
+  </section>
+
+</body>
+</html>

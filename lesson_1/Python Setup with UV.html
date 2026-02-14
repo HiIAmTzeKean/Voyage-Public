@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Setup with UV - Technical Onboarding</title>
+<style>
+/* Theme Variables */
+:root {
+  --font-family-display: Arial, sans-serif;
+  --font-weight-display: 600;
+  --font-family-content: Arial, sans-serif;
+  --font-weight-content: 400;
+  --font-size-content: 16px;
+  --line-height-content: 1.4;
+}
+
+/* DARK THEME (DEFAULT) */
+body.theme-dark {
+  --color-bg-base: #0f172a;
+  --color-bg-elevated: #020617;
+  --color-bg-surface: #1e293b;
+  --color-bg-muted: #334155;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-text-accent: #38bdf8;
+  --color-primary: #38bdf8;
+  --color-primary-foreground: #0f172a;
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-content);
+  font-weight: var(--font-weight-content);
+  font-size: var(--font-size-content);
+  line-height: var(--line-height-content);
+  overflow-x: hidden;
+}
+
+/* Slide Container */
+.slide {
+  width: 960px;
+  height: 540px;
+  margin: 0 auto 20px;
+  display: flex;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Layout Utilities */
+.row { flex-direction: row; }
+.col { flex-direction: column; }
+.center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.space-between { justify-content: space-between; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.fill-width { flex: 1; }
+.fill-height { flex: 1; display: flex; flex-direction: column; }
+
+/* Spacing */
+.gap-sm { gap: 0.5rem; }
+.gap-md { gap: 1rem; }
+.gap-lg { gap: 1.5rem; }
+.gap-xl { gap: 2rem; }
+.gap-2xl { gap: 3rem; }
+
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-8 { padding: 2rem; }
+.p-12 { padding: 3rem; }
+.p-16 { padding: 4rem; }
+
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mb-12 { margin-bottom: 3rem; }
+
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 2rem; }
+.mt-12 { margin-top: 3rem; }
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-display);
+  line-height: 1.2;
+  margin: 0;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.25rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+.text-6xl { font-size: 3.75rem; }
+.text-5xl { font-size: 3rem; }
+.text-4xl { font-size: 2.25rem; }
+.text-3xl { font-size: 1.875rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-xl { font-size: 1.25rem; }
+.text-lg { font-size: 1.125rem; }
+.text-base { font-size: 1rem; }
+.text-sm { font-size: 0.875rem; }
+.text-xs { font-size: 0.75rem; }
+
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.font-medium { font-weight: 500; }
+.font-normal { font-weight: 400; }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.opacity-90 { opacity: 0.9; }
+.opacity-80 { opacity: 0.8; }
+.opacity-70 { opacity: 0.7; }
+.opacity-60 { opacity: 0.6; }
+
+/* Lists */
+ul, ol {
+  margin-left: 2rem;
+  line-height: 1.8;
+}
+
+ul li { list-style: disc; }
+ol li { list-style: decimal; }
+
+li { margin-bottom: 0.75rem; }
+li:last-child { margin-bottom: 0; }
+
+/* Code Styles */
+code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+}
+
+pre {
+  font-family: 'Courier New', monospace;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+</style>
+</head>
+<body class="theme-dark">
+
+  <!-- Slide 1: Title -->
+  <section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+    <h1 class="text-6xl mb-4" style="color: #38bdf8;">Python Development Setup</h1>
+    <p class="text-2xl mb-2" style="color: #cbd5e1;">Using UV Package Manager</p>
+    <p class="text-xl" style="color: #94a3b8;">Technical Onboarding for Data Analysts &amp; Scientists</p>
+    <p class="text-sm mt-8" style="color: #94a3b8;">February 2026</p>
+  </section>
+
+  <!-- Slide 2: What is UV -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">What is UV?</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li>Extremely fast Python package and project manager</li>
+      <li>Written in Rust - 10-100x faster than pip</li>
+      <li>All-in-one replacement for pip, venv, virtualenv, and pipx</li>
+      <li>Automatic Python version management</li>
+    </ul>
+  </section>
+
+  <!-- Slide 3: Why UV for Our Team -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Why UV for Our Team?</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li>Fast dependency resolution for data science packages</li>
+      <li>Consistent environments across team members</li>
+      <li>Simplifies Python version management</li>
+      <li>Modern lockfile-based workflow</li>
+    </ul>
+  </section>
+
+  <!-- Slide 4: Prerequisites -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Prerequisites</h2>
+    <div class="row gap-lg">
+      <div class="fill-width" style="background-color: #1e293b; padding: 2rem;">
+        <h3 class="mb-4" style="color: #38bdf8;">macOS</h3>
+        <p style="color: #cbd5e1;">Terminal access (built-in)</p>
+      </div>
+      <div class="fill-width" style="background-color: #1e293b; padding: 2rem;">
+        <h3 class="mb-4" style="color: #38bdf8;">Windows</h3>
+        <p style="color: #cbd5e1;">PowerShell or Command Prompt (built-in)</p>
+      </div>
+    </div>
+    <p class="text-base mt-6" style="color: #94a3b8;">No Python installation required - UV manages it for you!</p>
+  </section>
+
+  <!-- Slide 5: Installing UV on macOS -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Installing UV on macOS</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Open Terminal and run the standalone installer:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">curl -LsSf https://astral.sh/uv/install.sh | sh</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Alternative: Install via Homebrew</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">brew install uv</pre>
+  </section>
+
+  <!-- Slide 6: Installing UV on Windows -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Installing UV on Windows</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Open PowerShell as Administrator and run:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Alternative: Install via WinGet</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">winget install --id=astral-sh.uv -e</pre>
+  </section>
+
+  <!-- Slide 7: Verify Installation -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Verify UV Installation</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">After installation, restart your terminal and verify:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">uv --version</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">You should see output like:</p>
+    <pre style="background-color: #1e293b; color: #94a3b8;">uv 0.10.2</pre>
+  </section>
+
+  <!-- Slide 8: Installing Python with UV -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Installing Python with UV</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">UV automatically downloads Python when needed. To install specific version:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">uv python install 3.12</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Check installed Python versions:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">uv python list</pre>
+  </section>
+
+  <!-- Slide 9: Creating Project -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Creating a New Project</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Initialize a new Python project:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">mkdir my-project
+cd my-project
+uv init</pre>
+    <p class="text-base" style="color: #94a3b8;">This creates pyproject.toml and sets up project structure</p>
+  </section>
+
+  <!-- Slide 10: Installing Jupyter -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Installing Jupyter Packages</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Add Jupyter and essential data science packages:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">uv add jupyter ipykernel notebook</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Add common analysis libraries:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8;">uv add pandas numpy matplotlib</pre>
+  </section>
+
+  <!-- Slide 11: Install VS Code -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Setting Up VS Code</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li>Download VS Code from code.visualstudio.com</li>
+      <li>Install for your operating system</li>
+      <li>Launch VS Code after installation</li>
+    </ul>
+  </section>
+
+  <!-- Slide 12: Install Extensions -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Required VS Code Extensions</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li>Python (by Microsoft) - Core Python support</li>
+      <li>Jupyter (by Microsoft) - Notebook support</li>
+      <li>Pylance (by Microsoft) - Language server</li>
+    </ul>
+    <p class="text-base mt-6" style="color: #94a3b8;">Install via Extensions panel (Ctrl+Shift+X / Cmd+Shift+X)</p>
+  </section>
+
+  <!-- Slide 13: Open Project in VS Code -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Open Project in VS Code</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">From terminal in your project directory:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">code .</pre>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Or use VS Code menu:</p>
+    <p class="text-base" style="color: #cbd5e1;">File → Open Folder → Select your project folder</p>
+  </section>
+
+  <!-- Slide 14: Create Notebook -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Creating a Jupyter Notebook</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">In VS Code, press Ctrl+Shift+P (Cmd+Shift+P on Mac)</p>
+    <p class="text-base mb-4" style="color: #cbd5e1;">Type and select:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">Jupyter: Create New Blank Notebook</pre>
+    <p class="text-base" style="color: #cbd5e1;">Save as <code style="background-color: #1e293b; color: #38bdf8;">notebook.ipynb</code></p>
+  </section>
+
+  <!-- Slide 15: Select Python Kernel -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Selecting Python Kernel</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li>Click "Select Kernel" in top-right of notebook</li>
+      <li>Choose "Python Environments"</li>
+      <li>Select the .venv environment from your project</li>
+    </ul>
+    <p class="text-base mt-6" style="color: #94a3b8;">The kernel name will show in top-right corner</p>
+  </section>
+
+  <!-- Slide 16: Test Setup -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-4" style="color: #38bdf8;">Testing Your Setup</h2>
+    <p class="text-base mb-4" style="color: #cbd5e1;">In a notebook cell, run:</p>
+    <pre style="background-color: #1e293b; color: #38bdf8; margin-bottom: 1rem;">import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+print("Setup successful!")
+print(f"Pandas version: {pd.__version__}")</pre>
+    <p class="text-base" style="color: #cbd5e1;">Press Shift+Enter to execute</p>
+  </section>
+
+  <!-- Slide 17: Common Commands -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Essential UV Commands</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li><code style="background-color: #1e293b; color: #38bdf8;">uv add &lt;package&gt;</code> - Install package</li>
+      <li><code style="background-color: #1e293b; color: #38bdf8;">uv remove &lt;package&gt;</code> - Remove package</li>
+      <li><code style="background-color: #1e293b; color: #38bdf8;">uv sync</code> - Sync dependencies</li>
+      <li><code style="background-color: #1e293b; color: #38bdf8;">uv run python script.py</code> - Run script</li>
+    </ul>
+  </section>
+
+  <!-- Slide 18: Troubleshooting -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Common Issues</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li>Kernel not found: Reinstall ipykernel</li>
+      <li>Import errors: Run <code style="background-color: #1e293b; color: #38bdf8;">uv sync</code></li>
+      <li>Wrong Python: Check kernel selection</li>
+      <li>VS Code not detecting .venv: Reload window</li>
+    </ul>
+  </section>
+
+  <!-- Slide 19: Best Practices -->
+  <section class="slide p-16 col" style="background-color: #0f172a; color: #f1f5f9;">
+    <h2 class="mb-6" style="color: #38bdf8;">Best Practices</h2>
+    <ul class="text-lg" style="color: #cbd5e1;">
+      <li>Always work within project directories</li>
+      <li>Use <code style="background-color: #1e293b; color: #38bdf8;">uv add</code> instead of pip</li>
+      <li>Commit pyproject.toml and uv.lock to git</li>
+      <li>Keep UV updated with <code style="background-color: #1e293b; color: #38bdf8;">uv self update</code></li>
+    </ul>
+  </section>
+
+
+  <!-- Slide 21: Thank You -->
+  <section class="slide p-16 col center" style="background-color: #020617; color: #f1f5f9;">
+    <h2 class="text-5xl mb-6" style="color: #38bdf8;">Welcome to the Team!</h2>
+    <p class="text-xl mb-4" style="color: #cbd5e1;">Questions?</p>
+  </section>
+
+</body>
+</html>
+
